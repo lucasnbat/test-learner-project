@@ -1,17 +1,14 @@
 import fastify from 'fastify'
-import { knex } from './database'
+// import { knex } from './database'
 import { env } from './env';
+import { transactionsRoutes } from './routes/transactions';
 
 const app = fastify()
 
-app.get('/hello', async () => {
-
-    const transactions = await knex('transactions')
-        .select('*')
-        .where('id', '988c4c1f-115b-4835-9a81-1902c6801b5e');
-
-    return transactions;
-})
+// é tipo o use do express. indica que vai usar as routes do transactionsRoutes
+app.register(transactionsRoutes, {
+    prefix: 'transactions' // todas as rotas do arq. começam com transactions + o que tem em cada chamada
+});
 
 app
     .listen({
