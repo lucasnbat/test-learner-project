@@ -1,13 +1,18 @@
+import 'dotenv/config'
+import { knex as setupKnex, Knex } from 'knex';
+import { env } from './env';
 /**
  * Configuração de database
  */
 
-import { knex as setupKnex, Knex } from 'knex';
+if (!env) {
+    throw new Error('Erro! env inexistente!')
+}
 
 export const config: Knex.Config = {
     client: 'sqlite3',
     connection: {
-        filename: './db/app.db'
+        filename: env.DATABASE_URL,
     },
     useNullAsDefault: true,
     migrations: {
