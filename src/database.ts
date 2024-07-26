@@ -11,7 +11,7 @@ if (!env) {
 console.log('Chegou aqui no database.ts=', env.DATABASE_URL)
 
 export const config: Knex.Config = {
-    client: 'sqlite3',
+    client: env.DATABASE_CLIENT,
     connection: {
         filename: env.DATABASE_URL,
     },

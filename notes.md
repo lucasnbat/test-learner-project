@@ -38,3 +38,5 @@
 ## Deploy
 
 - `npm i tsup -D`: usa esbuild assim como vitest para você compilar TS para JS
+- `npm i pg`: instalar driver do postgres
+- adiciona a DATABASE_CLIENT NO ENV/INDEX.TS 
