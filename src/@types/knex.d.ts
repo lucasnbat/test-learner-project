@@ -1,6 +1,7 @@
-// eslint-disable-next-line
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Knex } from 'knex'
-module 'knex/types/tables' {
+declare module 'knex/types/tables' {
     export interface Tables {
         transactions: {
             id: string

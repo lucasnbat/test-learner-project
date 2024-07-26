@@ -1,2 +1,14 @@
+#dependencies
 node_modules
+
+# database archives
+db/*.db
 db/app.db
+db/test.db
+
+# destination folder
+dist
+
+# environment vars
+.env
+.env.test

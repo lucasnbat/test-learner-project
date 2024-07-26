@@ -34,3 +34,7 @@
   - Usa esbuild = ele suporta ES modules, TS e JSX, permitindo vc compilar o TS para JS para o nodejs entender; por isso, ele é bem mais facil de configurar e mais rápido também;
   - `npm i vitest -D`
 - `npm i supertest -D`
+
+## Deploy
+
+- `npm i tsup -D`: usa esbuild assim como vitest para você compilar TS para JS
