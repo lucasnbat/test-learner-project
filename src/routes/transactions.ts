@@ -6,6 +6,11 @@ import { checkSessionIdExists } from "../middlewares/check-session-id-exists";
 
 // isso é um plugin do fastify, sempre deve ser function assincrona (async)
 export async function transactionsRoutes(app: FastifyInstance) {
+    // hook que usa o contexto desse plugin. o plugin trnasactionRoutes tem um contexto só dele, que é manipulável só aqui e vale para todas as rotas
+    app.addHook('preHandler', async (request) => {
+        console.log(`[${request.method} ${request.url}]`)
+    })
+
     app.get(
         '/',
         {
