@@ -8,13 +8,13 @@ if (!env) {
     throw new Error('Erro! env inexistente!')
 }
 
-console.log('Chegou aqui no database.ts=', env.DATABASE_URL)
-
 export const config: Knex.Config = {
     client: env.DATABASE_CLIENT,
-    connection: {
-        filename: env.DATABASE_URL,
-    },
+    connection:
+        env.DATABASE_CLIENT === 'sqlite' ?
+            {
+                filename: env.DATABASE_URL,
+            } : env.DATABASE_URL,
     useNullAsDefault: true,
     migrations: {
         extension: 'ts',
