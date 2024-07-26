@@ -1,17 +1,25 @@
 import { it, afterAll, beforeAll, describe, expect } from 'vitest'
 import request from 'supertest'
 import { app } from '../src/app'
+import { } from 'node:test'
+import { execSync } from 'node:child_process'
 
 // describe isola e gera um contexto apenas para trnasaction routes
 describe('Transactions routes', () => {
     // antes que qualquer teste execute, execute uma vez...
     beforeAll(async () => {
         await app.ready() // aguarde os plugins/rotas serem cadastrados no app
+        execSync('npm run knex migrate:latest') // executa comando no terminal em paralelo a execução do código
     })
 
     // após executar todos os testes, jogue a aplicação para fora da memoria
     afterAll(async () => {
         await app.close()
+    })
+
+    beforeAll(async () => {
+        execSync('npm run knex migrate:rollback --all')
+        execSync('npm run knex migrate:latest')
     })
 
     it('should be able create new transaction normally', async () => {

@@ -3,9 +3,13 @@ import { config } from 'dotenv'
 import { z } from 'zod'
 
 if (process.env.NODE_ENV === 'test') {
+    console.log('Caiu em test. Variáveis lidas:', process.env.NODE_ENV)
     config({ path: '.env.test' })
+    console.log('path=', config({ path: '.env.test' }))
 } else {
+    console.log('Caiu em prod. Variáveis lidas:', process.env.NODE_ENV)
     config() // procura no .env
+    console.log('path=', config({ path: '.env' }))
 }
 
 const envSchema = z.object({

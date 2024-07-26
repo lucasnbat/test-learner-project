@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import { knex as setupKnex, Knex } from 'knex';
 import { env } from './env';
 /**
@@ -8,6 +7,8 @@ import { env } from './env';
 if (!env) {
     throw new Error('Erro! env inexistente!')
 }
+
+console.log('Chegou aqui no database.ts=', env.DATABASE_URL)
 
 export const config: Knex.Config = {
     client: 'sqlite3',
