@@ -16,3 +16,8 @@
 - COlocar o import dotenv/config no daabase.ts
 - npm i zod: validação de dados de .env, etc
 - Validação por zod é criar um arquivo no src/env/index.ts, depois configurar um schema com z e usar o parse() para validar uma info (no caso o env) e exportar essa info validada para fora;
+
+## Cookies
+
+- npm i @fastify/cookies
+- 

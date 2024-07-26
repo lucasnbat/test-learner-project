@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { knex } from "../database";
 import { z } from "zod";
+import { randomUUID } from "crypto";
 
 // isso é um plugin do fastify, sempre deve ser function assincrona (async)
 export async function transactionsRoutes(app: FastifyInstance) {
@@ -21,7 +22,15 @@ export async function transactionsRoutes(app: FastifyInstance) {
         return { transaction }
     })
 
-    app.post('/', async (request, response) => {
+    app.get('/summary', async () => {
+        const summary = await knex('transactions')
+            .sum('amount', { as: 'amount' })
+            .first()
+
+        return { summary }
+    })
+
+    app.post('/', async (request, reply) => {
 
         const createTransactionBodySchema = z.object({
             title: z.string(),
@@ -29,15 +38,27 @@ export async function transactionsRoutes(app: FastifyInstance) {
             type: z.enum(['credit', 'debit']),
         })
 
-        const { title, amount, type } = createTransactionBodySchema.parse(request.body)
+        const { title, amount, type } = createTransactionBodySchema.parse(request.body);
+
+        let sessionId = request.cookies.sessionId;
+
+        if (!sessionId) {
+            sessionId = randomUUID()
+
+            reply.cookie('sessionId', sessionId, {
+                path: '/', // quais rotas podem acessar? / = todas
+                maxAge: 60 * 60 * 24 * 7 // 7 days
+            })
+        }
 
         await knex('transactions').insert({
             id: crypto.randomUUID(),
             title,
-            amount: type === 'credit' ? amount : amount * -1
+            amount: type === 'credit' ? amount : amount * -1,
+            session_id: sessionId,
         })
 
-        return response.status(201).send();
+        return reply.status(201).send();
     })
 }
 
