@@ -38,7 +38,10 @@
 ## Deploy
 
 - `npm i tsup -D`: usa esbuild assim como vitest para você compilar TS para JS
+- configurar comando build no package.json
 - `npm i pg`: instalar driver do postgres
-- adiciona a DATABASE_CLIENT NO ENV/INDEX.TS 
-- Configura o database.js para ler as variáveis ambientes conforme o .env
-- 
+- adiciona uma var de ambiente 'DATABASE_CLIENT=' nos .env
+- adiciona a DATABASE_CLIENT NO ENV/INDEX.TS lá em client
+- adiciona a lógica da connection conforme o banco pede
+  - ex: `connection: env.DATABASE_CLIENT === 'sqlite' ? { filename: env.DATABASE_URL } : env.DATABASE_URL,` 
+- Depois é só fazer as config. de um banco postgres + o webservice(sua api) lá no render.com 
